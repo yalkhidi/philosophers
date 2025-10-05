@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:00:12 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 11:20:54 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:53:56 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	detect_death(t_input *input)
 	{
 		if (philo_starved(&input->philos[i]))
 		{
-			// smart_usleep(input, 10);
 			log_status(&input->philos[i], "died");
 			pthread_mutex_lock(&input->dead_lock);
 			input->dead = 1;

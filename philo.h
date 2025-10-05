@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 13:07:29 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 10:53:55 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:20:09 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,11 @@ bool			check_valid_chars(char **str);
 bool			check_valid_operators(int ac, char **av);
 unsigned long	*collect_input(int ac, char **av);
 t_input			*assign_inputs(unsigned long *input_array);
-
 void			init(t_input *input);
 void			init_philos(t_input *input);
 void			create_threads(t_input *input);
 void			*moniter(void *arg);
 void			*routine(void *arg);
-
 void			log_status(t_philo *philo, char *status);
 void			smart_usleep(t_input *input, unsigned long time_in_ms);
 unsigned long	get_time(void);
