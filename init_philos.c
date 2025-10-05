@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:19:56 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 13:16:41 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:30:52 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init(t_input *input)
 {
-	int	i;
+	unsigned int	i;
 
 	input->philos = malloc(sizeof(t_philo) * input->n_philo);
 	if (!input->philos)
@@ -23,7 +23,7 @@ void	init(t_input *input)
 	if (!input->forks)
 		free_resources(input, "Error\nCouldn't allocate forks\n");
 	i = 0;
-	while (i < (int)input->n_philo)
+	while (i < input->n_philo)
 	{
 		if (pthread_mutex_init(&input->forks[i], NULL) != 0)
 			free_resources(input, "Error\nCouldn't initiate fork mutex\n");
@@ -40,10 +40,10 @@ void	init(t_input *input)
 
 void	init_philos(t_input *input)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	while (i < (int)input->n_philo)
+	while (i < input->n_philo)
 	{
 		input->philos[i].id = (unsigned int)i + 1;
 		input->philos[i].r_fork = i;
@@ -60,13 +60,13 @@ void	init_philos(t_input *input)
 
 void	create_threads(t_input *input)
 {
-	int			i;
-	pthread_t	waiter;
+	unsigned int	i;
+	pthread_t		waiter;
 
 	if (pthread_create(&waiter, NULL, moniter, (void *)input) != 0)
 		free_resources(input, "Error\nCouldn't create thread\n");
 	i = -1;
-	while (++i < (int)input->n_philo)
+	while (++i < input->n_philo)
 	{
 		if (pthread_create(&input->philos[i].thread, NULL, routine,
 				(void *)&input->philos[i]) != 0)
@@ -75,7 +75,7 @@ void	create_threads(t_input *input)
 	if (pthread_join(waiter, NULL) != 0)
 		free_resources(input, "Error\nCouldn't join thread\n");
 	i = -1;
-	while (++i < (int)input->n_philo)
+	while (++i < input->n_philo)
 	{
 		if (pthread_join(input->philos[i].thread, NULL) != 0)
 			free_resources(input, "Error\nCouldn't join thread\n");

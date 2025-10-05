@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 13:04:36 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 10:06:41 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:15:01 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	unsigned long	*array;
+	unsigned int	*array;
 	t_input			*input;
 
 	array = collect_input(ac, av);

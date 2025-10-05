@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 09:59:29 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 10:54:47 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:34:15 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,19 @@ unsigned long	get_time(void)
 
 void	free_resources(t_input *input, char *message)
 {
-	int	i;
+	unsigned int	i;
 
 	if (input->forks)
 	{
 		i = -1;
-		while (++i < (int)input->n_philo)
+		while (++i < input->n_philo)
 			pthread_mutex_destroy(&input->forks[i]);
 		free(input->forks);
 	}
 	if (input->philos)
 	{
 		i = -1;
-		while (++i < (int)input->n_philo)
+		while (++i < input->n_philo)
 			pthread_mutex_destroy(&input->philos[i].meal_lock);
 		free(input->philos);
 	}

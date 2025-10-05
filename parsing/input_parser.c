@@ -6,26 +6,28 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 16:57:07 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 09:47:44 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:24:10 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-bool	split_arg(char *arg, unsigned long *in_array, int *in_ptr)
+bool	split_arg(char *arg, unsigned int *in_array, int *in_ptr)
 {
-	char	**splitted;
-	int		j;
-	int		in;
+	char			**splitted;
+	int				j;
+	int				in;
+	unsigned long	num;
 
 	j = 0;
 	in = *in_ptr;
 	splitted = ft_split(arg);
 	while (splitted[j])
 	{
-		in_array[in] = ft_atoi(splitted[j]);
-		if (!is_within_limits(in_array[in]))
+		num = ft_atoi(splitted[j]);
+		if (!is_within_limits(num))
 			return (free_split(splitted), free(in_array), false);
+		in_array[in] = (unsigned int)num;
 		in++;
 		j++;
 	}
@@ -34,15 +36,15 @@ bool	split_arg(char *arg, unsigned long *in_array, int *in_ptr)
 	return (true);
 }
 
-unsigned long	*collect_input(int ac, char **av)
+unsigned int	*collect_input(int ac, char **av)
 {
-	unsigned long	*in_array;
+	unsigned int	*in_array;
 	int				i;
 	int				j;
 
 	i = 1;
 	j = 0;
-	in_array = (unsigned long *)malloc(6 * sizeof(unsigned long));
+	in_array = (unsigned int *)malloc(6 * sizeof(unsigned int));
 	if (!in_array)
 		return (NULL);
 	if (!check_valid_chars(av) || !check_valid_operators(ac, av))
@@ -63,7 +65,7 @@ unsigned long	*collect_input(int ac, char **av)
 	return (in_array);
 }
 
-t_input	*assign_inputs(unsigned long *input_array)
+t_input	*assign_inputs(unsigned int *input_array)
 {
 	t_input	*input;
 
@@ -78,7 +80,6 @@ t_input	*assign_inputs(unsigned long *input_array)
 		input->n_t_philo_eat = input_array[4];
 	else
 		input->n_t_philo_eat = 0;
-	input->finished = 0;
 	input->dead = 0;
 	free(input_array);
 	return (input);

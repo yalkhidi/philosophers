@@ -6,22 +6,22 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 13:54:12 by yalkhidi          #+#    #+#             */
-/*   Updated: 2025/10/05 13:54:10 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:19:12 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	still_alive(t_philo *philo)
+bool	still_alive(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->input->dead_lock);
 	if (philo->input->dead == 1)
 	{
 		pthread_mutex_unlock(&philo->input->dead_lock);
-		return (0);
+		return (false);
 	}
 	pthread_mutex_unlock(&philo->input->dead_lock);
-	return (1);
+	return (true);
 }
 
 void	philo_sleep_think(t_philo *philo)
