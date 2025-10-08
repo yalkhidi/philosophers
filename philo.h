@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <string.h>
 
 typedef struct s_input	t_input;
 
@@ -47,7 +48,8 @@ typedef struct s_input
 	unsigned int		dead;
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		write_lock;
-	pthread_mutex_t		*forks;
+	unsigned int		*forks;
+	pthread_mutex_t		*fork_locks;
 	t_philo				*philos;
 }						t_input;
 
@@ -65,6 +67,7 @@ t_input			*assign_inputs(unsigned int *input_array);
 void			init(t_input *input);
 void			init_philos(t_input *input);
 void			create_threads(t_input *input);
+bool	still_alive(t_input *input);
 void			*moniter(void *arg);
 void			*routine(void *arg);
 void			log_status(t_philo *philo, char *status);

@@ -19,13 +19,17 @@ void	init(t_input *input)
 	input->philos = malloc(sizeof(t_philo) * input->n_philo);
 	if (!input->philos)
 		free_resources(input, "Error\nCouldn't allocate philosophers\n");
-	input->forks = malloc(sizeof(pthread_mutex_t) * input->n_philo);
+	input->forks = malloc(sizeof(unsigned int) * input->n_philo);
 	if (!input->forks)
-		free_resources(input, "Error\nCouldn't allocate forks\n");
+		free_resources(input, "Error\nCouldn't allocate forks array\n");
+	memset(input->forks, 0, sizeof(unsigned int) * input->n_philo);
+	input->fork_locks = malloc(sizeof(pthread_mutex_t) * input->n_philo);
+	if (!input->fork_locks)
+		free_resources(input, "Error\nCouldn't allocate fork_locks\n");
 	i = 0;
 	while (i < input->n_philo)
 	{
-		if (pthread_mutex_init(&input->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&input->fork_locks[i], NULL) != 0)
 			free_resources(input, "Error\nCouldn't initiate fork mutex\n");
 		if (pthread_mutex_init(&input->philos[i].meal_lock, NULL) != 0)
 			free_resources(input, "Error\nCouldn't initiate meal mutex\n");

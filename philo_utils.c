@@ -15,11 +15,9 @@
 void	log_status(t_philo *philo, char *status)
 {
 	pthread_mutex_lock(&philo->input->write_lock);
-	pthread_mutex_lock(&philo->input->dead_lock);
-	if (philo->input->dead != 1)
+	if (still_alive(philo->input))
 		printf("%ld %u %s\n", get_time() - philo->start_time,
 			philo->id, status);
-	pthread_mutex_unlock(&philo->input->dead_lock);
 	pthread_mutex_unlock(&philo->input->write_lock);
 }
 
@@ -28,7 +26,7 @@ void	smart_usleep(t_input *input, unsigned long time_in_ms)
 	unsigned long	start;
 
 	start = get_time();
-	while (!input->dead)
+	while (still_alive(input))
 	{
 		if ((get_time() - start) >= time_in_ms)
 			break ;
@@ -50,13 +48,15 @@ void	free_resources(t_input *input, char *message)
 {
 	unsigned int	i;
 
-	if (input->forks)
+	if (input->fork_locks)
 	{
 		i = -1;
 		while (++i < input->n_philo)
-			pthread_mutex_destroy(&input->forks[i]);
-		free(input->forks);
+			pthread_mutex_destroy(&input->fork_locks[i]);
+		free(input->fork_locks);
 	}
+	if (input->forks)
+		free(input->forks);
 	if (input->philos)
 	{
 		i = -1;
