@@ -14,8 +14,6 @@
 
 void	init(t_input *input)
 {
-	unsigned int	i;
-
 	input->philos = malloc(sizeof(t_philo) * input->n_philo);
 	if (!input->philos)
 		free_resources(input, "Error\nCouldn't allocate philosophers\n");
@@ -26,6 +24,13 @@ void	init(t_input *input)
 	input->fork_locks = malloc(sizeof(pthread_mutex_t) * input->n_philo);
 	if (!input->fork_locks)
 		free_resources(input, "Error\nCouldn't allocate fork_locks\n");
+	init_mutexes(input);
+}
+
+void	init_mutexes(t_input *input)
+{
+	unsigned int	i;
+
 	i = 0;
 	while (i < input->n_philo)
 	{

@@ -44,7 +44,7 @@ unsigned long	get_time(void)
 	return (time_in_ms);
 }
 
-void	free_resources(t_input *input, char *message)
+void	destroy_mutexes(t_input *input)
 {
 	unsigned int	i;
 
@@ -55,8 +55,6 @@ void	free_resources(t_input *input, char *message)
 			pthread_mutex_destroy(&input->fork_locks[i]);
 		free(input->fork_locks);
 	}
-	if (input->forks)
-		free(input->forks);
 	if (input->philos)
 	{
 		i = -1;
@@ -64,12 +62,19 @@ void	free_resources(t_input *input, char *message)
 			pthread_mutex_destroy(&input->philos[i].meal_lock);
 		free(input->philos);
 	}
+	if (input->forks)
+		free(input->forks);
 	if (input)
 	{
 		pthread_mutex_destroy(&input->write_lock);
 		pthread_mutex_destroy(&input->dead_lock);
 		free(input);
 	}
+}
+
+void	free_resources(t_input *input, char *message)
+{
+	destroy_mutexes(input);
 	if (message)
 		print_message(message);
 }
